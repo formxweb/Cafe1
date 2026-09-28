@@ -39,8 +39,9 @@ async function refreshPrices() {
     const product = live.get(id);
     const row = el.closest('[data-item]');
     if (!product) {
-      // Taken off the menu since the last sync
-      if (row) row.hidden = true;
+      // Taken off the menu since the last sync: drop the row, or the price
+      // from an editorial caption
+      (row ?? el).hidden = true;
       return;
     }
     const options = groups

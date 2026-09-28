@@ -4,9 +4,9 @@ import { product } from '../lib/menu.js';
 
 // The table is set in three moves. Positions are percentages of the stage.
 const objects = [
-  { step: 1, item: product(36), alt: 'La Joie fincanında espresso', x: 40, y: 13, w: 20, mx: 33, my: 15, mw: 46, z: 2 },
-  { step: 2, item: product(109), alt: 'Krema, çilek, çikolata ve kadayıf katmanlı Dubai Cup', x: 57, y: 26, w: 10.5, mx: 58, my: 29, mw: 25, z: 1 },
-  { step: 3, item: product(100), alt: 'İnce belli bardakta, buharı tüten demli çay', x: 70, y: 5, w: 13, mx: 76, my: 5, mw: 30, z: 3 },
+  { step: 1, item: product(36), alt: 'La Joie fincanında espresso', x: 40, y: 13, w: 20, mx: 54, my: 15, mw: 44, z: 2 },
+  { step: 2, item: product(109), alt: 'Krema, çilek, çikolata ve kadayıf katmanlı Dubai Cup', x: 57, y: 26, w: 10.5, mx: 82, my: 29, mw: 20, z: 1 },
+  { step: 3, item: product(100), alt: 'İnce belli bardakta, buharı tüten demli çay', x: 70, y: 5, w: 13, mx: 22, my: 5, mw: 27, z: 3 },
 ];
 
 const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
@@ -27,6 +27,10 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
             ))
           }
         </h2>
+        <div class="table-end" data-step="4">
+          <p class="table-ready serif">Masa hazır<span class="dot" aria-hidden="true"></span></p>
+          <a class="button" href="#menu">Tüm menü <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
       </header>
 
       <div class="table-surface" aria-hidden="true"></div>
@@ -48,11 +52,6 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
           </figure>
         ))
       }
-
-      <div class="table-end wrap" data-step="4">
-        <p class="table-ready serif">Masa hazır<span class="dot" aria-hidden="true"></span></p>
-        <a class="button" href="#menu">Tüm menü <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
     </div>
   </div>
 </section>
@@ -77,7 +76,15 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
   .table-head {
     position: relative;
     z-index: 5;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: var(--col-gap);
     padding-top: calc(var(--nav-h) + clamp(1.5rem, 5vh, 3.5rem));
+  }
+
+  .table-index {
+    grid-column: 1 / -1;
   }
 
   .table-index {
@@ -156,10 +163,6 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
   }
 
   .table-end {
-    position: absolute;
-    right: 0;
-    top: calc(var(--nav-h) + clamp(1.5rem, 5vh, 3.5rem));
-    z-index: 5;
     display: grid;
     justify-items: end;
     gap: 1.25rem;
@@ -167,6 +170,7 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
   }
 
   .table-ready {
+    white-space: nowrap;
     font-size: clamp(2rem, 3.2vw, 3.5rem);
     font-style: italic;
     color: var(--grove);
@@ -230,6 +234,15 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
     }
   }
 
+  /* Portrait tablets: the tall stage takes the phone arrangement, a little smaller */
+  @media (min-width: 768px) and (max-aspect-ratio: 5 / 6) {
+    .table-object {
+      left: calc(var(--mx) * 1%);
+      bottom: calc(var(--my) * 1%);
+      width: calc(var(--mw) * 0.72vw);
+    }
+  }
+
   @media (max-width: 767px) {
     .table-lines {
       font-size: clamp(2.75rem, 12.5vw, 3.75rem);
@@ -252,15 +265,17 @@ const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
       font-size: 0.6875rem;
     }
 
+    .table-head {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .table-end {
-      top: auto;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding-bottom: 1.25rem;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: auto auto;
       align-items: center;
+      justify-content: start;
       justify-items: start;
+      column-gap: 1.25rem;
+      margin-top: 1.25rem;
       text-align: left;
     }
 

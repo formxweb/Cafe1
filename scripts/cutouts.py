@@ -26,6 +26,10 @@ SRC = ROOT / "src/assets/menu"
 OUT = ROOT / "src/assets/cutouts"
 PAD = 0.03  # breathing room around the trimmed object, as a share of its size
 
+# Watermark letters that the mask kept, per photo: (top, right) of the bottom-left
+# corner, as shares of the trimmed image, where warm pixels are cleared.
+RETOUCH = {"40": (0.905, 0.30)}  # flat white: fragments under the spoon handle
+
 
 def neutral_mask(rgb: np.ndarray) -> np.ndarray:
     """Soft mask of neutral (white/grey) pixels: plates, saucers, cups."""
@@ -63,7 +67,18 @@ def cutout(photo: Path, session) -> Image.Image:
     left, top, right, bottom = image.getbbox()
     pad = round(max(right - left, bottom - top) * PAD)
     box = (max(0, left - pad), max(0, top - pad), min(image.width, right + pad), min(image.height, bottom + pad))
-    return image.crop(box)
+    image = image.crop(box)
+
+    if photo.stem in RETOUCH:
+        y, x = RETOUCH[photo.stem]
+        px = np.asarray(image).copy()
+        h, w = px.shape[:2]
+        corner = np.zeros((h, w), bool)
+        corner[int(h * y) :, : int(w * x)] = True
+        warm = px[..., 0].astype(int) - px[..., 2].astype(int) > 16
+        px[..., 3][corner & warm] = 0
+        image = Image.fromarray(px, "RGBA")
+    return image
 
 
 def main() -> None:

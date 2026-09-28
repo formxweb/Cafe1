@@ -157,7 +157,7 @@ const lines = [
 
   /* ---- Right column ---- */
   .cover-side {
-    grid-column: 10 / -1;
+    grid-column: 9 / -1;
     align-self: end;
     justify-self: end;
     display: grid;
@@ -170,6 +170,7 @@ const lines = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    white-space: nowrap;
   }
 
   .cover-hours {
@@ -227,6 +228,37 @@ const lines = [
     }
   }
 
+  /* ---- Portrait tablets: the lines move up, the cup grows into the space ---- */
+  @media (min-width: 768px) and (max-aspect-ratio: 5 / 6) {
+    .cover-inner {
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .cover-lines,
+    .cover-side {
+      grid-row: 2;
+      align-self: start;
+      margin-top: clamp(3rem, 6vh, 5rem);
+    }
+
+    .cover-lines {
+      grid-column: 1 / span 6;
+    }
+
+    .cover-lines li:nth-child(3) {
+      display: block;
+    }
+
+    .cover-side {
+      grid-column: 8 / -1;
+    }
+
+    .cover-cup {
+      width: min(58vw, 42svh);
+      transform: translate(-50%, 30%);
+    }
+  }
+
   /* ---- Phone: masthead, one line, the cup ---- */
   @media (max-width: 767px) {
     .cover-inner {
@@ -281,8 +313,15 @@ const lines = [
     }
 
     .cover-cup {
-      width: min(84vw, 44svh);
-      transform: translate(-50%, 40%);
+      width: min(80vw, 46svh);
+      transform: translate(-50%, 24%);
+    }
+
+    .cover-cup figcaption {
+      left: auto;
+      right: 0;
+      top: -3.25rem;
+      padding: 0 0 0 0.75rem;
     }
   }
 

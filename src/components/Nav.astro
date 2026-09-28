@@ -54,7 +54,7 @@ import { site, sections as links } from '../data/site.js';
     <div class="panel-meta">
       <p class="micro" data-open-status>{site.hours.label}</p>
       <a class="serif num" href={site.phone.href}>{site.phone.display}</a>
-      <a class="micro link" href={site.instagram.url} target="_blank" rel="noopener">@{site.instagram.handle}</a>
+      <a class="micro link" href={site.instagram.url} target="_blank" rel="noopener" lang="en">@{site.instagram.handle}</a>
       <p class="micro">{site.address.street}, {site.address.city}</p>
     </div>
   </nav>
@@ -382,7 +382,6 @@ import { site, sections as links } from '../data/site.js';
   const panel = document.querySelector<HTMLElement>('[data-panel]')!;
   const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
   const themed = [...document.querySelectorAll<HTMLElement>('[data-nav-theme]')];
-  const cover = document.getElementById('kapak');
 
   let panelOpen = false;
 
@@ -395,8 +394,7 @@ import { site, sections as links } from '../data/site.js';
       return;
     }
     const probe = nav.offsetHeight / 2;
-    const coverEnd = cover ? cover.getBoundingClientRect().bottom : 0;
-    nav.dataset.state = coverEnd > probe * 2 ? 'top' : 'solid';
+    nav.dataset.state = scrollY > 8 ? 'solid' : 'top';
 
     const under = themed.findLast((el) => el.getBoundingClientRect().top <= probe);
     nav.dataset.theme = under?.dataset.navTheme ?? 'light';

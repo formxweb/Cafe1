@@ -48,7 +48,7 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="footer-base wrap micro">
-    <p>© {year} {site.fullName} · {site.address.city}</p>
+    <p>© {year} <span lang="en">{site.fullName}</span> · {site.address.city}</p>
     <a class="link" href="#kapak">Başa dön ↑</a>
   </div>
 </footer>
@@ -138,10 +138,13 @@ const year = new Date().getFullYear();
   }
 
   @media (max-width: 767px) {
+    .footer-top {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .footer-col,
-    .footer-col:nth-of-type(2),
-    .footer-col:last-child {
-      grid-column: span 2;
+    .footer-col:nth-of-type(2) {
+      grid-column: span 1;
     }
 
     .footer-col:last-child {
