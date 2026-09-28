@@ -1,0 +1,36 @@
+---
+// The round LJ emblem from the official brand files.
+import { monogram } from './paths.js';
+
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['emblem', className]}
+  viewBox="0 0 400 400"
+  xmlns="http://www.w3.org/2000/svg"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  <circle cx="200" cy="200" r="190" fill="var(--gold)"></circle>
+  <circle cx="200" cy="200" r="180" fill="var(--grove)"></circle>
+  <circle cx="200" cy="200" r="165" fill="var(--gold)"></circle>
+  <circle cx="200" cy="200" r="158" fill="var(--grove)"></circle>
+  <path d={monogram} fill="var(--paper)" fill-rule="evenodd"></path>
+  <circle cx="272" cy="133" r="14" fill="var(--gold)"></circle>
+  <path d="M242 148 Q272 176 302 148" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round"></path>
+</svg>
+
+<style>
+  .emblem {
+    width: 100%;
+    height: auto;
+  }
+</style>

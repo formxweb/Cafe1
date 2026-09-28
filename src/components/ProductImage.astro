@@ -1,0 +1,38 @@
+---
+// A menu product as a responsive AVIF/WebP picture. Uses the transparent
+// cut-out when there is one, so the product can stand on any surface.
+import { Picture } from 'astro:assets';
+import { productImage, productPhoto } from '../lib/menu.js';
+
+interface Props {
+  id: number;
+  alt: string;
+  sizes: string;
+  /** Use the original square photo on cream paper instead of the cut-out. */
+  photo?: boolean;
+  priority?: boolean;
+  class?: string;
+}
+
+const { id, alt, sizes, photo = false, priority = false, class: className } = Astro.props;
+const src = photo ? productPhoto(id) : productImage(id);
+---
+
+{
+  src && (
+    <Picture
+      src={src}
+      alt={alt}
+      sizes={sizes}
+      widths={[160, 240, 360, 480, 640, 800, 1000]}
+      formats={['avif', 'webp']}
+      fallbackFormat={photo ? 'jpg' : 'webp'}
+      quality={photo ? 72 : 78}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding={priority ? 'sync' : 'async'}
+      fetchpriority={priority ? 'high' : undefined}
+      class={className}
+      pictureAttributes={{ class: className ? `${className}-picture` : undefined }}
+    />
+  )
+}

@@ -1,0 +1,272 @@
+---
+import ProductImage from './ProductImage.astro';
+import { product } from '../lib/menu.js';
+
+const plate = product(32); // Kremalı Tavuklu Penne
+const glass = product(39); // Americano, iced
+---
+
+<section id="la-joie" class="def" data-nav-theme="dark" aria-labelledby="def-title">
+  <div class="def-entry wrap grid">
+    <p class="def-index micro">01 — Sözlük</p>
+
+    <div class="def-head">
+      <h2 id="def-title" class="def-word serif italic" data-reveal="rise"><span>la joie</span></h2>
+      <p class="def-phon" data-reveal style="--delay:200">
+        <span class="num">[la ʒwa]</span> <span aria-hidden="true">·</span> isim <span aria-hidden="true">·</span> Fransızca
+      </p>
+      <p class="def-meaning serif" data-reveal style="--delay:350">Neşe<span class="dot" aria-hidden="true"></span></p>
+    </div>
+
+    <p class="def-text serif" data-reveal>
+      Dershaneler Sokağı’nda bir mutfak ve bir kahve tezgâhı. Sabah espressosu, öğle arasına sığan sıcak bir tabak,
+      akşamüstü paylaşılan bir tatlı. <em>Bizim için neşe bu kadar somut.</em>
+    </p>
+  </div>
+
+  <div class="split" data-split aria-label="Kitchen & Coffee">
+    <div class="split-row split-row--kitchen">
+      <p class="split-word serif" data-split-word="1" aria-hidden="true">Kitchen</p>
+      <figure class="split-object split-object--plate" data-reveal>
+        <ProductImage
+          id={plate.id}
+          alt="Tavuk ve mantarlı kremalı penne, kâsede"
+          sizes="(max-width: 767px) 50vw, 29vw"
+        />
+      </figure>
+      <div class="split-note">
+        <p class="micro"><span lang="en">Kitchen</span> — mutfak</p>
+        <p>Kahvaltı, Makarna Kulübü, tavuk ve köfte, salatalar, doyuran menüler.</p>
+      </div>
+    </div>
+
+    <p class="split-amp serif italic" aria-hidden="true">&amp;</p>
+
+    <div class="split-row split-row--coffee">
+      <p class="split-word serif" data-split-word="-1" aria-hidden="true">Coffee</p>
+      <figure class="split-object split-object--glass" data-reveal>
+        <ProductImage
+          id={glass.id}
+          alt="La Joie bardağında buzlu americano"
+          sizes="(max-width: 767px) 22vw, 11vw"
+        />
+      </figure>
+      <div class="split-note">
+        <p class="micro"><span lang="en">Coffee</span> — kahve</p>
+        <p>Espresso, flat white, Latte Creations; limonatalı Joie Fresh ve Joie Tropic; tatlılar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .def {
+    position: relative;
+    background: var(--grove);
+    color: var(--paper);
+    overflow-x: clip;
+  }
+
+  .def-entry {
+    padding-top: clamp(14rem, 34vw, 26rem);
+    row-gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .def-index {
+    grid-column: 1 / span 3;
+    color: var(--gold);
+    padding-top: 1.5rem;
+  }
+
+  .def-head {
+    grid-column: 4 / -1;
+  }
+
+  .def-word {
+    font-size: var(--t-display);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+
+  .def-phon {
+    margin-top: clamp(1rem, 2vw, 2rem);
+    font-size: var(--t-lead);
+    color: var(--muted-on-dark);
+    letter-spacing: 0.01em;
+  }
+
+  .def-meaning {
+    margin-top: 0.5rem;
+    font-size: var(--t-h1);
+    font-weight: 420;
+    color: var(--paper);
+  }
+
+  .def-text {
+    grid-column: 4 / span 8;
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
+    font-weight: 330;
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+    text-wrap: pretty;
+  }
+
+  .def-text em {
+    color: var(--gold);
+  }
+
+  /* ---- Kitchen & Coffee ---- */
+  .split {
+    position: relative;
+    padding-block: var(--section) calc(var(--section) * 1.1);
+  }
+
+  .split-row {
+    position: relative;
+  }
+
+  .split-word {
+    font-size: clamp(5.5rem, 22vw, 24rem);
+    font-weight: 300;
+    line-height: 0.82;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    will-change: transform;
+  }
+
+  .split-row--kitchen .split-word {
+    padding-left: var(--gutter);
+  }
+
+  .split-row--coffee .split-word {
+    text-align: right;
+    padding-right: var(--gutter);
+  }
+
+  .split-object {
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .split-object :global(img) {
+    width: 100%;
+    filter: drop-shadow(0 2rem 2.5rem rgb(0 0 0 / 0.35));
+  }
+
+  /* A diagonal: the plate bleeds off the left edge over "Kitchen", the glass
+     stands in front of the end of "Coffee" on the right. */
+  .split-object--plate {
+    left: -5vw;
+    top: -9vw;
+    width: 29vw;
+  }
+
+  .split-object--glass {
+    right: 5vw;
+    top: -15vw;
+    width: 11vw;
+  }
+
+  .split-note {
+    display: grid;
+    gap: 0.5rem;
+    max-width: 21rem;
+    margin-top: clamp(1.5rem, 3vw, 3rem);
+    color: var(--muted-on-dark);
+    font-size: var(--t-small);
+  }
+
+  .split-note .micro {
+    color: var(--gold);
+  }
+
+  .split-row--kitchen .split-note {
+    margin-left: auto;
+    margin-right: var(--gutter);
+    text-align: right;
+  }
+
+  .split-row--coffee .split-note {
+    margin-left: var(--gutter);
+  }
+
+  .split-amp {
+    position: relative;
+    z-index: 2;
+    margin: clamp(-3rem, -4vw, -1rem) 0;
+    text-align: center;
+    font-size: clamp(5rem, 14vw, 15rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  @media (max-width: 767px) {
+    .def-entry {
+      padding-top: clamp(13rem, 60vw, 17rem);
+    }
+
+    .def-index,
+    .def-head,
+    .def-text {
+      grid-column: 1 / -1;
+    }
+
+    .def-index {
+      padding-top: 0;
+    }
+
+    .def-word {
+      font-size: clamp(4.25rem, 24vw, 6rem);
+    }
+
+    .def-text {
+      font-size: 1.5rem;
+    }
+
+    .split-word {
+      font-size: 29vw;
+    }
+
+    .split-object--plate {
+      left: -14vw;
+      top: -16vw;
+      width: 50vw;
+    }
+
+    .split-object--glass {
+      right: 2vw;
+      top: -34vw;
+      width: 22vw;
+    }
+
+    .split-note {
+      max-width: 15rem;
+    }
+
+    .split-amp {
+      font-size: 30vw;
+      margin: 1rem 0 2rem;
+    }
+  }
+</style>
+
+<script>
+  import { onFrame, passProgress, reducedMotion } from '../scripts/frame.js';
+
+  const split = document.querySelector<HTMLElement>('[data-split]')!;
+  const words = [...split.querySelectorAll<HTMLElement>('[data-split-word]')];
+
+  // The two words slide past each other while the chapter crosses the screen.
+  onFrame(() => {
+    if (reducedMotion.matches) return;
+    const p = passProgress(split) - 0.5;
+    words.forEach((word) => {
+      const direction = Number(word.dataset.splitWord);
+      word.style.transform = `translate3d(${direction * p * -18}vw, 0, 0)`;
+    });
+  });
+</script>

@@ -1,0 +1,58 @@
+---
+// The official "La Joie" wordmark (Signature 03), redrawn inline so the gold
+// dot and the smile over the i can move independently of the letters.
+import { letters, descriptor as descriptorGlyphs } from './paths.js';
+
+interface Props {
+  descriptor?: boolean;
+  label?: string;
+  class?: string;
+}
+
+const { descriptor = false, label, class: className } = Astro.props;
+const viewBox = descriptor ? '0 12 1160 378' : '0 12 1160 330';
+---
+
+<svg
+  class:list={['wordmark', className]}
+  viewBox={viewBox}
+  xmlns="http://www.w3.org/2000/svg"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  <path class="wordmark-letters" d={letters} fill="currentColor" fill-rule="evenodd"></path>
+  <path
+    class="wordmark-arc"
+    d="M850 70 Q897 116 944 70"
+    fill="none"
+    stroke="var(--gold)"
+    stroke-width="13"
+    stroke-linecap="round"
+    pathLength="1"
+  ></path>
+  <circle class="wordmark-dot" cx="897" cy="46" r="25" fill="var(--gold)"></circle>
+  {
+    descriptor && (
+      <g class="wordmark-descriptor">
+        <g fill="currentColor" set:html={descriptorGlyphs} />
+        <rect x="21" y="361" width="177" height="5" rx="2.5" fill="var(--gold)" />
+        <rect x="956" y="361" width="175" height="5" rx="2.5" fill="var(--gold)" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .wordmark {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .wordmark-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+</style>

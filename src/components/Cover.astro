@@ -1,0 +1,402 @@
+---
+import Wordmark from './brand/Wordmark.astro';
+import ProductImage from './ProductImage.astro';
+import { site } from '../data/site.js';
+import { product } from '../lib/menu.js';
+
+const cup = product(40); // Flat White, served in the LJ cup
+
+const lines = [
+  { href: '#masa', label: 'Masa', text: 'Önce kahve, sonra tatlı, sonra bir çay daha.' },
+  { href: '#menu', label: 'Menü', text: 'Espressodan Dubai Cup’a bütün menü, güncel fiyatlarla.' },
+  { href: '#gun', label: 'Öğle arası', text: 'Siparişinizi önden bırakın, geldiğinizde hazır olsun.' },
+];
+---
+
+<section id="kapak" class="cover" data-nav-theme="light" data-cover aria-labelledby="cover-title">
+  <div class="cover-inner wrap">
+    <div class="cover-mast">
+      <h1 id="cover-title" class="cover-title">
+        <span class="visually-hidden">La Joie Kitchen & Coffee, Dershaneler Sokağı, Mersin</span>
+        <Wordmark class="cover-wordmark" />
+      </h1>
+      <p class="cover-lockup micro" aria-hidden="true">
+        <span class="cover-lockup-side">Mersin</span>
+        <span class="cover-rule"></span>
+        <span lang="en">Kitchen &amp; Coffee</span>
+        <span class="cover-rule"></span>
+        <span class="cover-lockup-side">Dershaneler Sokağı</span>
+      </p>
+    </div>
+
+    <ul class="cover-lines" aria-label="Bu sayfada">
+      {
+        lines.map((line, i) => (
+          <li style={`--i:${i}`}>
+            <a href={line.href}>
+              <span class="micro">{line.label}</span>
+              <span class="serif italic">{line.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="cover-side">
+      <p class="cover-status micro" data-open-status>{site.hours.label}</p>
+      <p class="cover-hours serif num">Her gün<br />{site.hours.open} – {site.hours.close}</p>
+      <a class="button" href="#menu">Menüyü aç <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+
+    <figure class="cover-cup" data-cover-cup>
+      <ProductImage
+        id={cup.id}
+        alt="La Joie logolu fincanda, köpüğünde yaprak deseni olan flat white"
+        sizes="(max-width: 767px) 92vw, (max-width: 1279px) 46vw, 40vw"
+        priority
+        class="cover-cup-img"
+      />
+      <figcaption class="credit">
+        <span>{cup.name}</span>
+        <span class="num" data-price-for={cup.id}>{cup.price}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .cover {
+    position: relative;
+    z-index: 2;
+    background: var(--paper);
+  }
+
+  .cover-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr;
+    column-gap: var(--col-gap);
+    min-height: 100svh;
+    padding-top: calc(var(--nav-h) + clamp(0.5rem, 2vh, 1.5rem));
+    padding-bottom: clamp(2rem, 6vh, 4rem);
+  }
+
+  /* ---- Masthead ---- */
+  .cover-mast {
+    grid-column: 1 / -1;
+  }
+
+  .cover-title {
+    margin-inline: calc(var(--gutter) * -0.55);
+    color: var(--grove);
+  }
+
+  .cover-lockup {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: clamp(0.75rem, 2vh, 1.5rem);
+    color: var(--grove);
+    letter-spacing: 0.32em;
+  }
+
+  .cover-rule {
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--gold);
+    transform-origin: center;
+  }
+
+  .cover-lockup-side {
+    letter-spacing: 0.18em;
+    color: var(--muted);
+  }
+
+  /* ---- Cover lines: an editorial table of contents ---- */
+  .cover-lines {
+    grid-column: 1 / span 4;
+    align-self: end;
+    display: grid;
+    gap: 1.1rem;
+    max-width: 22rem;
+  }
+
+  .cover-lines a {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .cover-lines .micro {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--gold-text);
+  }
+
+  .cover-lines .micro::before {
+    content: '';
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+    transition: width var(--d-2) var(--ease);
+  }
+
+  .cover-lines .serif {
+    font-size: clamp(1.125rem, 1.35vw, 1.4rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  @media (hover: hover) {
+    .cover-lines a:hover .micro::before {
+      width: 2.5rem;
+    }
+  }
+
+  /* ---- Right column ---- */
+  .cover-side {
+    grid-column: 10 / -1;
+    align-self: end;
+    justify-self: end;
+    display: grid;
+    justify-items: end;
+    gap: 1rem;
+    text-align: right;
+  }
+
+  .cover-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cover-hours {
+    font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+    line-height: 1.05;
+    color: var(--grove);
+  }
+
+  /* ---- The cup: sits across the edge of the next chapter ---- */
+  .cover-cup {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    z-index: 3;
+    width: min(34vw, 56svh);
+    margin: 0;
+    transform: translate(-50%, 44%);
+    pointer-events: none;
+  }
+
+  .cover-cup :global(.cover-cup-img) {
+    width: 100%;
+    filter: drop-shadow(0 2.5rem 2.5rem rgb(18 37 27 / 0.18));
+  }
+
+  /* Photo credit, magazine style */
+  .cover-cup figcaption {
+    position: absolute;
+    left: 92%;
+    top: 24%;
+    display: grid;
+    gap: 0.2rem;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--line);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ---- Tablet ---- */
+  @media (max-width: 1023px) {
+    .cover-lines {
+      grid-column: 1 / span 5;
+    }
+
+    .cover-side {
+      grid-column: 8 / -1;
+    }
+
+    .cover-lines li:nth-child(3) {
+      display: none;
+    }
+
+    .cover-cup {
+      width: min(40vw, 46svh);
+    }
+  }
+
+  /* ---- Phone: masthead, one line, the cup ---- */
+  @media (max-width: 767px) {
+    .cover-inner {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto 1fr;
+      padding-top: calc(var(--nav-h) + 1.5rem);
+      padding-bottom: 0;
+      min-height: 100svh;
+    }
+
+    .cover-title {
+      margin-inline: calc(var(--gutter) * -0.6);
+    }
+
+    .cover-lockup {
+      gap: 0.75rem;
+      letter-spacing: 0.26em;
+      font-size: 0.6875rem;
+    }
+
+    .cover-lockup-side {
+      display: none;
+    }
+
+    .cover-lines {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      margin-top: 2.25rem;
+    }
+
+    .cover-lines li:not(:first-child) {
+      display: none;
+    }
+
+    .cover-lines .serif {
+      font-size: 1.375rem;
+    }
+
+    .cover-side {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      justify-self: stretch;
+      justify-items: start;
+      margin-top: 9rem;
+      text-align: left;
+    }
+
+    .cover-hours {
+      display: none;
+    }
+
+    .cover-cup {
+      width: min(84vw, 44svh);
+      transform: translate(-50%, 40%);
+    }
+  }
+
+  /* ---- Opening sequence (CSS only, runs without JS) ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .cover-title :global(.wordmark) {
+      animation: cover-rise var(--d-4) var(--ease) 100ms both;
+    }
+
+    .cover-title :global(.wordmark-dot) {
+      animation: cover-drop 1000ms var(--ease) 1100ms both;
+    }
+
+    .cover-title :global(.wordmark-arc) {
+      stroke-dasharray: 1;
+      animation: cover-draw 900ms var(--ease-in-out) 1700ms both;
+    }
+
+    .cover-rule {
+      animation: cover-rule var(--d-3) var(--ease) 900ms both;
+    }
+
+    .cover-lockup > span:not(.cover-rule),
+    .cover-lines li,
+    .cover-side {
+      animation: cover-fade var(--d-3) var(--ease) both;
+      animation-delay: calc(1300ms + var(--i, 0) * 90ms);
+    }
+
+    .cover-side {
+      animation-delay: 1500ms;
+    }
+
+    .cover-cup :global(.cover-cup-img) {
+      animation: cover-settle 1800ms var(--ease) 350ms both;
+    }
+  }
+
+  @keyframes cover-rise {
+    from {
+      clip-path: inset(100% -5% -20% -5%);
+      transform: translateY(14%);
+    }
+    to {
+      clip-path: inset(-80% -5% -20% -5%);
+      transform: none;
+    }
+  }
+
+  @keyframes cover-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-340%);
+    }
+    40% {
+      opacity: 1;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes cover-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes cover-rule {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes cover-fade {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes cover-settle {
+    from {
+      opacity: 0;
+      transform: translateY(-6%) scale(1.04);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import { onFrame, reducedMotion } from '../scripts/frame.js';
+
+  const cover = document.querySelector<HTMLElement>('[data-cover]')!;
+  const cup = cover.querySelector<HTMLElement>('[data-cover-cup]')!;
+
+  // As the page moves on, the cup lags a little and sinks into the green
+  // chapter below.
+  onFrame(() => {
+    if (reducedMotion.matches) return;
+    cup.style.translate = `0 ${Math.min(scrollY, innerHeight * 1.2) * 0.14}px`;
+  });
+</script>

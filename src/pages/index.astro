@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Cover from '../components/Cover.astro';
+import Definition from '../components/Definition.astro';
+import Table from '../components/Table.astro';
+import Menu from '../components/Menu.astro';
+import Day from '../components/Day.astro';
+import Social from '../components/Social.astro';
+import Visit from '../components/Visit.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site.js';
+---
+
+<Base
+  title={`${site.fullName} · ${site.address.street}, ${site.address.city}`}
+  description={`Mersin ${site.address.street}’nda kahve, tatlı ve mutfak. ${site.hours.label}. Güncel menü ve fiyatlar, öğle arası için ön sipariş, telefon ve yol tarifi.`}
+>
+  <Nav />
+  <main id="icerik">
+    <Cover />
+    <Definition />
+    <Table />
+    <Menu />
+    <Day />
+    <Social />
+    <Visit />
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import '../scripts/reveal.js';
+  import '../scripts/live.js';
+</script>

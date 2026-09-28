@@ -1,0 +1,829 @@
+{
+  "syncedAt": "2026-09-28T14:09:34.861Z",
+  "categories": [
+    {
+      "id": 15,
+      "name": "ÖĞRENCİ MENÜSÜ",
+      "position": 10
+    },
+    {
+      "id": 14,
+      "name": "EN ÇOK TERCİH EDİLENLER",
+      "position": 20
+    },
+    {
+      "id": 13,
+      "name": "DOYURAN MENÜLER",
+      "position": 30
+    },
+    {
+      "id": 4,
+      "name": "TAVUK & KÖFTE",
+      "position": 50
+    },
+    {
+      "id": 5,
+      "name": "MAKARNA KULÜBÜ",
+      "position": 60
+    },
+    {
+      "id": 1,
+      "name": "KAHVALTI",
+      "position": 70
+    },
+    {
+      "id": 2,
+      "name": "SALATALAR",
+      "position": 80
+    },
+    {
+      "id": 3,
+      "name": "ÇITIR EKSTRALAR",
+      "position": 90
+    },
+    {
+      "id": 10,
+      "name": "TATLILAR",
+      "position": 100
+    },
+    {
+      "id": 6,
+      "name": "KAHVE & İÇECEKLER",
+      "position": 110
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "categoryId": 1,
+      "name": "Omlet Tabağı",
+      "description": "Taze domates ve salatalıkla servis edilen omlet; klasik, mantarlı veya sebzeli seçeneğiyle hazırlanır.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Omlet Çeşidi",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Mantarlı",
+              "price": 30,
+              "soldOut": false
+            },
+            {
+              "name": "Sebzeli",
+              "price": 40,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "categoryId": 2,
+      "name": "Tavuklu Sezar Salata",
+      "description": "Iceberg, Roka, Yeşil Elma, Kroton, Brokoli, Cherry Domates, Sezar Sos, Tavuk",
+      "price": 290,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 15,
+      "categoryId": 3,
+      "name": "Patates",
+      "description": "Altın renginde kızartılan, dışı gevrek ve içi yumuşak patatesler; özel baharat karışımıyla servis edilir.",
+      "price": 120,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 21,
+      "categoryId": 4,
+      "name": "Izgara Tavuk",
+      "description": "Izgarada pişirilen tavuk, patates kızartması ve karışık mevsim sebzeleriyle servis edilir.",
+      "price": 350,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 25,
+      "categoryId": 14,
+      "name": "Izgara Köfte",
+      "description": "5 adet el yapımı dana köfte; patates kızartması, dilim ekmek ve karışık mevsim sebzeleriyle servis edilir.",
+      "price": 400,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 88,
+      "categoryId": 10,
+      "name": "Meyveli Kruvasan",
+      "description": "Kat kat kruvasan; pastacı kreması ve taze çilekle doldurulur, sütlü çikolata sosu ve çıtır fındık parçalarıyla tamamlanır.",
+      "price": 280,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 100,
+      "categoryId": 6,
+      "name": "Çay",
+      "description": "Kendi harmanımızla demlediğimiz, dengeli lezzeti ve kendine özgü aromasıyla klasik çay keyfi.",
+      "price": 50,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 104,
+      "categoryId": 15,
+      "name": "Sebzeli Noodle Menü",
+      "description": "Özel sosla harmanlanan noodle, renkli sebzeler ve susamla hazırlanır. 250 ml Coca-Cola ile servis edilir.",
+      "price": 170,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 12,
+      "categoryId": 2,
+      "name": "Çıtır Tavuklu Salata",
+      "description": "Kıvırcık Marul,Lolorosso,Chery Domates,Salatalık,Mor Lahana,Mısır,Sezar Sos,Çıtır Tavuk",
+      "price": 290,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 16,
+      "categoryId": 3,
+      "name": "Joie Nuggets",
+      "description": "Dışı çıtır, içi yumuşacık tavuk lokmaları. 6’lı veya 9’lu porsiyon seçeneğiyle.",
+      "price": 80,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Porsiyonunu Seç",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "6’lı Joie Nuggets",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "9’lu Joie Nuggets",
+              "price": 30,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "categoryId": 14,
+      "name": "Kremalı Tavuk Favorileri",
+      "description": "Kremalı sosla hazırlanan tavuk; makarna ve karışık mevsim sebzeleriyle servis edilir. Mantarlı, körili veya acılı seçeneğini tercih edebilirsin. Acılı seçenekte ayrıca kapya ve çarliston biber bulunur.",
+      "price": 310,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Favorini Seç",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Mantarlı",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Körili",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Acılı",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "categoryId": 6,
+      "name": "Espresso",
+      "description": "Yoğun aroması ve güçlü kahve tadıyla sade bir klasik. Yanında su ile servis edilir.",
+      "price": 120,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 91,
+      "categoryId": 13,
+      "name": "Joie Tavuk Dürüm Menü",
+      "description": "Özel kremalı marinasyonla hazırlanan tavuk parçaları; taze marul, domates ve Joie sosuyla tortilla ekmeğine sarılır. Patates kızartması ve kutu Coca-Cola ile servis edilir.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Menüye Dahil İçecek",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Coca-Cola 250 ml",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "categoryId": 5,
+      "name": "Mac & Cheese",
+      "description": "Krema ve cheddar sosuyla hazırlanan klasik Mac & Cheese.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 105,
+      "categoryId": 15,
+      "name": "Tavuklu Noodle Menü",
+      "description": "Özel sosla harmanlanan noodle ve tavuk parçalarıyla hazırlanır. 250 ml Coca-Cola ile servis edilir.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 106,
+      "categoryId": 4,
+      "name": "Izgara Köfte",
+      "description": "5 adet el yapımı dana köfte; patates kızartması, dilim ekmek ve karışık mevsim sebzeleriyle servis edilir.",
+      "price": 400,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 107,
+      "categoryId": 4,
+      "name": "Kremalı Tavuk Favorileri",
+      "description": "Kremalı sosla hazırlanan tavuk; makarna ve karışık mevsim sebzeleriyle servis edilir. Mantarlı, körili veya acılı seçeneğini tercih edebilirsin. Acılı seçenekte ayrıca kapya ve çarliston biber bulunur.",
+      "price": 310,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Favorini Seç",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Mantarlı",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Körili",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Acılı",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 110,
+      "categoryId": 6,
+      "name": "Americano (Hot / Iced)",
+      "description": "Espresso ve suyla hazırlanan, kahvenin karakterini öne çıkaran sade lezzet. Tercihine göre sıcak ya da buzlu hazırlanır.",
+      "price": 120,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Nasıl hazırlayalım?",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Sıcak",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Buzlu",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "categoryId": 1,
+      "name": "Joie Classic Tost",
+      "description": "Kaşar peyniriyle hazırlanan, dışı altın renginde kızartılmış sıcak tost; taze domates ve salatalıkla servis edilir. Dilediğin ekstra malzemeleri ekleyerek tostunu kendine göre oluştur.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Ekstra Malzemeler",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Sucuk",
+              "price": 50,
+              "soldOut": false
+            },
+            {
+              "name": "Sosis",
+              "price": 30,
+              "soldOut": false
+            },
+            {
+              "name": "Salam",
+              "price": 20,
+              "soldOut": false
+            },
+            {
+              "name": "Cheddar Peyniri",
+              "price": 30,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "categoryId": 3,
+      "name": "Soğan Halkası",
+      "description": "Altın renginde kızartılan gevrek soğan halkaları. 8’li, 12’li veya 16’lı porsiyon seçeneğiyle.",
+      "price": 60,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Porsiyonunu Seç",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "8’li Soğan Halkası",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "12’li Soğan Halkası",
+              "price": 30,
+              "soldOut": false
+            },
+            {
+              "name": "16’lı Soğan Halkası",
+              "price": 50,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "categoryId": 5,
+      "name": "Kremalı Tavuklu Penne",
+      "description": "Tavuk ve mantarın kremalı sosla buluştuğu penne.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 33,
+      "categoryId": 14,
+      "name": "Mac & Cheese",
+      "description": "Krema ve cheddar sosuyla hazırlanan klasik Mac & Cheese.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 41,
+      "categoryId": 6,
+      "name": "Cappuccino",
+      "description": "Espresso, sıcak süt ve dolgun süt köpüğünün dengeli buluşması. Sıcak servis edilir.",
+      "price": 150,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 86,
+      "categoryId": 14,
+      "name": "Dubai Cup",
+      "description": "Özel krema, taze çilek, yoğun çikolata ve çıtır kadayıf katmanlarıyla hazırlanan, her kaşıkta farklı bir doku sunan özel tatlı.",
+      "price": 240,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 101,
+      "categoryId": 13,
+      "name": "Joie Chicken Menü",
+      "description": "Yuvarlak ekmek arasında pane kaplı çıtır tavuk, domates, marul ve mayonez. Yanında patates kızartması, 250 ml Coca-Cola, ketçap ve mayonez ile servis edilir.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Menüye Dahil İçecek",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Coca-Cola 250 ml",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "categoryId": 5,
+      "name": "BBQ Penne",
+      "description": "Barbekü sosu, mantar, kapya ve çarliston biberle hazırlanan penne.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 39,
+      "categoryId": 14,
+      "name": "Americano (Hot / Iced)",
+      "description": "Espresso ve suyla hazırlanan, kahvenin karakterini öne çıkaran sade lezzet. Tercihine göre sıcak ya da buzlu hazırlanır.",
+      "price": 120,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Nasıl hazırlayalım?",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Sıcak",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Buzlu",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "categoryId": 14,
+      "name": "Profiterol",
+      "description": "İçi özel kremayla doldurulmuş profiterol topları; yoğun çikolata sosu ve kavrulmuş fındık parçalarıyla servis edilir.",
+      "price": 250,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 90,
+      "categoryId": 13,
+      "name": "Köfte Ekmek Menü",
+      "description": "El yapımı dana köftelerle hazırlanan köfte ekmek; patates kızartması ve 250 ml Coca-Cola ile servis edilir. Small ve Large seçeneklerinde köfte gramajı artar.",
+      "price": 230,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Köfte Porsiyonunu Seç",
+          "mode": "absolute",
+          "choices": [
+            {
+              "name": "Small — 100g köfte",
+              "price": 230,
+              "soldOut": false
+            },
+            {
+              "name": "Large — 170g köfte",
+              "price": 330,
+              "soldOut": false
+            }
+          ]
+        },
+        {
+          "name": "Menüye Dahil İçecek",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Coca-Cola 250 ml",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "categoryId": 5,
+      "name": "Penne Arrabbiata",
+      "description": "Acı domates sosuyla hazırlanan klasik penne.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 89,
+      "categoryId": 10,
+      "name": "Roll Kruvasan",
+      "description": "Özel pastacı kreması dolgusu, Belçika çikolatası ve fındık",
+      "price": 270,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 38,
+      "categoryId": 6,
+      "name": "Latte (Hot / Iced)",
+      "description": "Espresso ve sütün dengeli buluşmasıyla yumuşak içimli bir kahve. Tercihine göre sıcak ya da buzlu hazırlanır.",
+      "price": 150,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Nasıl hazırlayalım?",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Sıcak",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Buzlu",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 108,
+      "categoryId": 10,
+      "name": "Profiterol",
+      "description": "İçi özel kremayla doldurulmuş profiterol topları; yoğun çikolata sosu ve kavrulmuş fındık parçalarıyla servis edilir.",
+      "price": 250,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 40,
+      "categoryId": 6,
+      "name": "Flat White",
+      "description": "Double shot espresso ve ince dokulu süt köpüğüyle hazırlanan, latteye göre daha yoğun ve güçlü kahve lezzeti. Sıcak servis edilir.",
+      "price": 170,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 93,
+      "categoryId": 13,
+      "name": "Çıtır Tavuk Dürüm Menü",
+      "description": "2 adet el yapımı çıtır tavuk tenders; taze marul, domates ve Joie sosuyla tortilla ekmeğine sarılır; Patates kızartması, ketçap, mayonez ve 250 ml Coca-Cola ile servis edilir.",
+      "price": 250,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Menüye Dahil İçecek",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Coca-Cola 250 ml",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 109,
+      "categoryId": 10,
+      "name": "Dubai Cup",
+      "description": "Özel krema, taze çilek, yoğun çikolata ve çıtır kadayıf katmanlarıyla hazırlanan, her kaşıkta farklı bir doku sunan özel tatlı.",
+      "price": 240,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 83,
+      "categoryId": 10,
+      "name": "Magnolia",
+      "description": "Kat kat magnolia kreması ve bisküvi dokusuyla hazırlanan tatlımız. Oreolu, çilekli veya muzlu seçeneklerinden dilediğini seç.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Magnolianı Seç",
+          "mode": "absolute",
+          "choices": [
+            {
+              "name": "Oreolu",
+              "price": 200,
+              "soldOut": false
+            },
+            {
+              "name": "Çilekli",
+              "price": 220,
+              "soldOut": false
+            },
+            {
+              "name": "Muzlu",
+              "price": 220,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "categoryId": 13,
+      "name": "Joie Crispy Mix Menü",
+      "description": "2 adet el yapımı çıtır tavuk tenders ve 4 adet Crispy Bites; patates kızartması, ketçap, mayonez ve 250 ml Coca-Cola ile servis edilir.",
+      "price": 250,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Menüye Dahil İçecek",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Coca-Cola 250 ml",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 96,
+      "categoryId": 6,
+      "name": "Joie Fresh",
+      "description": "Limonata, buz ve seçtiğin meyve püresinin ferahlatıcı karışımı. Çilek, elma veya orman meyveleri seçenekleriyle, buzla harmanlanarak hazırlanır.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 97,
+      "categoryId": 6,
+      "name": "Joie Tropic",
+      "description": "Limonatanın tropik meyve püreleriyle buluşması. Mango, ananas veya mango & ananas seçenekleriyle, buzla harmanlanarak hazırlanır.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": []
+    },
+    {
+      "id": 98,
+      "categoryId": 6,
+      "name": "Latte Creations · Soft",
+      "description": "Espresso ve sütün çilek, vanilya veya Hindistan cevizi aromasıyla buluşması. Tercihine göre sıcak ya da buzlu hazırlanır.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Aromanı seç",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Çilek",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Vanilya",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Hindistan Cevizi",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        },
+        {
+          "name": "Nasıl hazırlayalım?",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Sıcak",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Buzlu",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 99,
+      "categoryId": 6,
+      "name": "Latte Creations · Sweet",
+      "description": "Espresso ve sütün karamel, çikolata veya beyaz çikolata aromasıyla buluşması. Tercihine göre sıcak ya da buzlu hazırlanır.",
+      "price": 200,
+      "soldOut": false,
+      "hasPhoto": true,
+      "options": [
+        {
+          "name": "Aromanı seç",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Karamel",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Çikolata",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Beyaz Çikolata",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        },
+        {
+          "name": "Nasıl hazırlayalım?",
+          "mode": "add",
+          "choices": [
+            {
+              "name": "Sıcak",
+              "price": 0,
+              "soldOut": false
+            },
+            {
+              "name": "Buzlu",
+              "price": 0,
+              "soldOut": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

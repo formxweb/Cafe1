@@ -1,0 +1,286 @@
+---
+import ProductImage from './ProductImage.astro';
+import { product } from '../lib/menu.js';
+
+// The table is set in three moves. Positions are percentages of the stage.
+const objects = [
+  { step: 1, item: product(36), alt: 'La Joie fincanında espresso', x: 40, y: 13, w: 20, mx: 33, my: 15, mw: 46, z: 2 },
+  { step: 2, item: product(109), alt: 'Krema, çilek, çikolata ve kadayıf katmanlı Dubai Cup', x: 57, y: 26, w: 10.5, mx: 58, my: 29, mw: 25, z: 1 },
+  { step: 3, item: product(100), alt: 'İnce belli bardakta, buharı tüten demli çay', x: 70, y: 5, w: 13, mx: 76, my: 5, mw: 30, z: 3 },
+];
+
+const lines = ['Önce kahve', 'Sonra tatlı', 'Bir çay daha'];
+---
+
+<section id="masa" class="table" data-nav-theme="light" aria-labelledby="table-title">
+  <div class="table-track" data-table>
+    <div class="table-stage">
+      <header class="table-head wrap">
+        <p class="table-index micro">02 — Masa</p>
+        <h2 id="table-title" class="table-lines serif">
+          {
+            lines.map((line, i) => (
+              <span class="table-line" data-step={i + 1}>
+                {line}
+                <span class="dot" aria-hidden="true" />
+              </span>
+            ))
+          }
+        </h2>
+      </header>
+
+      <div class="table-surface" aria-hidden="true"></div>
+
+      {
+        objects.map(({ step, item, alt, x, y, w, mx, my, mw, z }) => (
+          <figure
+            class="table-object"
+            data-step={step}
+            style={`--x:${x};--y:${y};--w:${w};--mx:${mx};--my:${my};--mw:${mw};z-index:${z}`}
+          >
+            <ProductImage id={item.id} alt={alt} sizes={`(max-width: 767px) ${mw}vw, ${w}vw`} />
+            <figcaption class="credit">
+              <span>{item.name}</span>
+              <span class="num" data-price-for={item.id}>
+                {item.price}
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+
+      <div class="table-end wrap" data-step="4">
+        <p class="table-ready serif">Masa hazır<span class="dot" aria-hidden="true"></span></p>
+        <a class="button" href="#menu">Tüm menü <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .table {
+    position: relative;
+    background: var(--paper);
+  }
+
+  .table-track {
+    height: 420svh;
+  }
+
+  .table-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .table-head {
+    position: relative;
+    z-index: 5;
+    padding-top: calc(var(--nav-h) + clamp(1.5rem, 5vh, 3.5rem));
+  }
+
+  .table-index {
+    color: var(--gold-text);
+    margin-bottom: clamp(1rem, 2.5vh, 2rem);
+  }
+
+  .table-lines {
+    display: grid;
+    font-size: clamp(3rem, 6.4vw, 7.25rem);
+    font-weight: 340;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--grove);
+  }
+
+  .table-line:nth-child(2) {
+    padding-left: 0.6em;
+  }
+
+  .table-line:nth-child(3) {
+    padding-left: 1.2em;
+    font-style: italic;
+  }
+
+  /* The tabletop: a stone plane with a single hairline for its edge */
+  .table-surface {
+    position: absolute;
+    inset: 58% 0 0;
+    background: linear-gradient(to bottom, var(--stone), var(--paper-warm));
+    box-shadow: 0 -1px 0 var(--line);
+  }
+
+  .table-object {
+    position: absolute;
+    left: calc(var(--x) * 1%);
+    bottom: calc(var(--y) * 1%);
+    width: calc(var(--w) * 1vw);
+    margin: 0;
+    transform: translateX(-50%);
+  }
+
+  /* Contact shadow where the object meets the table */
+  .table-object::before {
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 12%;
+    height: 12%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(62 44 18 / 0.3), transparent);
+    filter: blur(6px);
+  }
+
+  .table-object :global(picture),
+  .table-object :global(img) {
+    position: relative;
+    width: 100%;
+  }
+
+  .table-object figcaption {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    display: flex;
+    gap: 0.6rem;
+    margin-top: -0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+
+  .table-object figcaption .num {
+    color: var(--ink);
+  }
+
+  .table-end {
+    position: absolute;
+    right: 0;
+    top: calc(var(--nav-h) + clamp(1.5rem, 5vh, 3.5rem));
+    z-index: 5;
+    display: grid;
+    justify-items: end;
+    gap: 1.25rem;
+    text-align: right;
+  }
+
+  .table-ready {
+    font-size: clamp(2rem, 3.2vw, 3.5rem);
+    font-style: italic;
+    color: var(--grove);
+  }
+
+  /* ---- Choreography: armed only with JS and welcome motion ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .table-line,
+    :global(.js) .table-end {
+      opacity: 0;
+      transform: translateY(0.35em);
+      transition:
+        opacity var(--d-3) var(--ease),
+        transform var(--d-3) var(--ease);
+    }
+
+    :global(.js) .table-object {
+      opacity: 0;
+      transform: translate(-50%, -14%);
+      transition:
+        opacity var(--d-3) var(--ease),
+        transform var(--d-4) var(--ease);
+    }
+
+    :global(.js) .table-object::before {
+      opacity: 0;
+      transform: scale(0.6);
+      transition:
+        opacity var(--d-3) var(--ease) 300ms,
+        transform var(--d-3) var(--ease) 300ms;
+    }
+
+    :global(.js) .table-object[data-step='2'] + .table-object[data-step='2'] {
+      transition-delay: 180ms;
+    }
+
+    :global(.js) .table [data-step].is-on {
+      opacity: 1;
+      transform: none;
+    }
+
+    :global(.js) .table-object.is-on {
+      transform: translateX(-50%);
+    }
+
+    :global(.js) .table-object.is-on::before {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .table-track {
+      height: auto;
+    }
+
+    .table-stage {
+      position: relative;
+      height: 100svh;
+      min-height: 40rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .table-lines {
+      font-size: clamp(2.75rem, 12.5vw, 3.75rem);
+    }
+
+    .table-surface {
+      inset: 55% 0 0;
+    }
+
+    .table-object {
+      left: calc(var(--mx) * 1%);
+      bottom: calc(var(--my) * 1%);
+      width: calc(var(--mw) * 1vw);
+    }
+
+    .table-object figcaption {
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      font-size: 0.6875rem;
+    }
+
+    .table-end {
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding-bottom: 1.25rem;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      justify-items: start;
+      text-align: left;
+    }
+
+    .table-ready {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+<script>
+  import { onFrame, stickyProgress, reducedMotion } from '../scripts/frame.js';
+
+  const track = document.querySelector<HTMLElement>('[data-table]')!;
+  const steps = [...track.querySelectorAll<HTMLElement>('[data-step]')];
+  // Scroll progress at which each move happens
+  const thresholds = [0, 0.26, 0.5, 0.74];
+
+  onFrame(() => {
+    const p = reducedMotion.matches ? 1 : stickyProgress(track);
+    const reached = track.getBoundingClientRect().top < innerHeight * 0.35 ? thresholds.filter((t) => p >= t).length : 0;
+    steps.forEach((el) => el.classList.toggle('is-on', Number(el.dataset.step) <= reached));
+  });
+</script>

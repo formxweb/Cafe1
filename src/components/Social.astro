@@ -1,0 +1,172 @@
+---
+import ProductImage from './ProductImage.astro';
+import { site } from '../data/site.js';
+import { product } from '../lib/menu.js';
+
+// Official menu photographs, shown as they were shot: square, on La Joie
+// paper with the La Joie watermark. They are labelled as menu photos, not posts.
+const frames = [
+  { item: product(98), alt: 'Çilek, vanilya ve hindistan cevizi aromalı üç Latte Creations' },
+  { item: product(108), alt: 'Çikolata sosu ve kavrulmuş fındıklı profiterol' },
+  { item: product(97), alt: 'Mango, ananas ve mango ananaslı üç Joie Tropic' },
+  { item: product(11), alt: 'Roka, yeşil elma, brokoli ve cherry domatesli tavuklu sezar salata' },
+];
+---
+
+<section id="instagram" class="social" data-nav-theme="dark" data-social aria-labelledby="social-title">
+  <div class="social-head wrap">
+    <p class="social-index micro">05 — Instagram</p>
+    <h2 id="social-title" class="visually-hidden">Instagram: @{site.instagram.handle}</h2>
+  </div>
+
+  <p class="social-handle serif italic" aria-hidden="true" data-social-handle>
+    <span>@{site.instagram.handle}</span>
+    <span>@{site.instagram.handle}</span>
+  </p>
+
+  <div class="social-body wrap">
+    <ul class="social-frames" aria-label="Menüden fotoğraflar">
+      {
+        frames.map(({ item, alt }, i) => (
+          <li class="social-frame" data-reveal style={`--delay:${i * 110}`}>
+            <ProductImage id={item.id} alt={alt} photo sizes="(max-width: 767px) 44vw, 23vw" />
+            <p class="credit">
+              <span>{item.name}</span>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="social-copy">
+      <p class="social-text serif">
+        Menüden kareler burada; <em>gerisi Instagram’da</em><span class="dot" aria-hidden="true"></span>
+      </p>
+      <a class="button button--light" href={site.instagram.url} target="_blank" rel="noopener">
+        Instagram’da keşfet <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .social {
+    position: relative;
+    background: var(--grove-deep);
+    color: var(--paper);
+    padding-block: var(--section);
+    overflow-x: clip;
+  }
+
+  .social-index {
+    color: var(--gold);
+  }
+
+  .social-handle {
+    display: flex;
+    gap: 0.35em;
+    margin-top: clamp(1.5rem, 3vw, 3rem);
+    font-size: clamp(4.5rem, 15vw, 17rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+    will-change: transform;
+  }
+
+  .social-handle span:last-child {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(247 240 226 / 0.35);
+  }
+
+  .social-body {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    margin-top: clamp(-4rem, -5vw, -2rem);
+  }
+
+  .social-frames {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    align-items: start;
+  }
+
+  /* A measured stagger, like prints laid on a table */
+  .social-frame:nth-child(2) {
+    margin-top: clamp(3rem, 7vw, 7rem);
+  }
+
+  .social-frame:nth-child(3) {
+    margin-top: clamp(1rem, 2vw, 2rem);
+  }
+
+  .social-frame:nth-child(4) {
+    margin-top: clamp(4.5rem, 10vw, 10rem);
+  }
+
+  .social-frame :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .social-frame .credit {
+    margin-top: 0.9rem;
+    color: var(--muted-on-dark);
+  }
+
+  .social-copy {
+    grid-column: 1 / span 8;
+    display: grid;
+    justify-items: start;
+    gap: 2rem;
+    margin-top: clamp(4rem, 8vw, 8rem);
+  }
+
+  .social-text {
+    font-size: var(--t-h2);
+    font-weight: 330;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .social-text em {
+    color: var(--gold);
+  }
+
+  @media (max-width: 767px) {
+    .social-frames {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2rem;
+    }
+
+    .social-frame:nth-child(n) {
+      margin-top: 0;
+    }
+
+    .social-frame:nth-child(even) {
+      margin-top: 3rem;
+    }
+
+    .social-copy {
+      grid-column: 1 / -1;
+      margin-top: 3.5rem;
+    }
+  }
+</style>
+
+<script>
+  import { onFrame, passProgress, reducedMotion } from '../scripts/frame.js';
+
+  const section = document.querySelector<HTMLElement>('[data-social]')!;
+  const handle = section.querySelector<HTMLElement>('[data-social-handle]')!;
+
+  // The handle drifts sideways as the chapter passes, never on its own.
+  onFrame(() => {
+    if (reducedMotion.matches) return;
+    handle.style.transform = `translate3d(${(0.15 - passProgress(section) * 0.55) * 100}vw, 0, 0)`;
+  });
+</script>

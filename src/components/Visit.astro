@@ -1,0 +1,266 @@
+---
+import { site } from '../data/site.js';
+---
+
+<section id="ziyaret" class="visit" data-nav-theme="light" aria-labelledby="visit-title">
+  <div class="visit-inner wrap">
+    <p class="visit-index micro">06 — Ziyaret</p>
+
+    <h2 id="visit-title" class="visit-title serif" data-reveal="rise">
+      <span>Bekleriz<span class="dot" aria-hidden="true"></span></span>
+    </h2>
+
+    <div class="visit-now" data-reveal style="--delay:200">
+      <p class="micro">Şu an</p>
+      <p class="visit-now-status serif" data-open-status>{site.hours.label}</p>
+    </div>
+
+    <p class="visit-street serif" data-reveal>
+      {site.address.street}<span class="visit-city">, {site.address.city}</span>
+    </p>
+
+    <dl class="visit-facts">
+      <div class="visit-fact" data-reveal style="--delay:0">
+        <dt class="micro">Adres</dt>
+        <dd>
+          <p class="serif">{site.address.street}<br />{site.address.city}</p>
+          <a class="link micro" href={site.mapsUrl} target="_blank" rel="noopener">Haritada aç ↗</a>
+        </dd>
+      </div>
+      <div class="visit-fact" data-reveal style="--delay:90">
+        <dt class="micro">Saatler</dt>
+        <dd>
+          <p class="serif num">Her gün<br />{site.hours.open} – {site.hours.close}</p>
+          <p class="visit-status micro" data-open-status>{site.hours.label}</p>
+        </dd>
+      </div>
+      <div class="visit-fact" data-reveal style="--delay:180">
+        <dt class="micro">Telefon</dt>
+        <dd>
+          <p class="serif num"><a href={site.phone.href}>{site.phone.display}</a></p>
+          <a class="link micro" href={site.phone.href}>Ara</a>
+        </dd>
+      </div>
+      <div class="visit-fact" data-reveal style="--delay:270">
+        <dt class="micro">Instagram</dt>
+        <dd>
+          <p class="serif"><a href={site.instagram.url} target="_blank" rel="noopener">@{site.instagram.handle}</a></p>
+          <a class="link micro" href={site.instagram.url} target="_blank" rel="noopener">Takip et ↗</a>
+        </dd>
+      </div>
+    </dl>
+
+    <div class="visit-order" data-reveal>
+      <p>
+        <span class="micro">Öğle arası</span>
+        <span class="serif">Önden sipariş verin, geldiğinizde hazır olsun.</span>
+        <span class="micro num">{site.preorder.from} – {site.preorder.until} · {site.preorder.note}</span>
+      </p>
+      <a class="button" href={site.preorder.url} target="_blank" rel="noopener">
+        Sipariş ver <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .visit {
+    position: relative;
+    background: var(--paper);
+    padding-block: var(--section);
+    overflow-x: clip;
+  }
+
+  .visit-inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .visit-index {
+    grid-column: 1 / -1;
+    color: var(--gold-text);
+  }
+
+  .visit-title {
+    grid-column: 1 / span 9;
+    margin-top: clamp(1rem, 2vw, 2rem);
+    margin-left: -0.05em;
+    font-size: clamp(5rem, 19vw, 21rem);
+    font-weight: 300;
+    line-height: 0.82;
+    letter-spacing: -0.055em;
+    color: var(--grove);
+  }
+
+  /* Live: open or closed right now, the first thing a visitor needs */
+  .visit-now {
+    grid-column: 10 / span 3;
+    grid-row: 2;
+    align-self: end;
+    display: grid;
+    gap: 0.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .visit-now .micro {
+    color: var(--gold-text);
+  }
+
+  .visit-now-status {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: clamp(1.375rem, 1.9vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--grove);
+  }
+
+  .visit-now-status::before {
+    transform: translateY(-0.2em);
+  }
+
+  .visit-street {
+    grid-column: 1 / span 9;
+    margin-top: clamp(1.5rem, 3vw, 3rem);
+    font-size: var(--t-h2);
+    font-style: italic;
+    font-weight: 330;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .visit-city {
+    color: var(--muted);
+  }
+
+  .visit-facts {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    margin-top: clamp(4rem, 8vw, 8rem);
+    border-top: 1px solid var(--ink);
+  }
+
+  .visit-fact {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding-top: 1.25rem;
+  }
+
+  .visit-fact + .visit-fact {
+    border-left: 1px solid var(--line);
+    padding-left: var(--col-gap);
+  }
+
+  .visit-fact dt {
+    color: var(--gold-text);
+  }
+
+  .visit-fact dd {
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+  }
+
+  .visit-fact .serif {
+    font-size: clamp(1.375rem, 1.9vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  .visit-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+  }
+
+  .visit-order {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--stone);
+  }
+
+  .visit-order p {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .visit-order .micro {
+    color: var(--gold-text);
+  }
+
+  .visit-order .serif {
+    font-size: var(--t-h3);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .visit-order .micro:last-child {
+    color: var(--muted);
+  }
+
+  @media (max-width: 1023px) {
+    .visit-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2.5rem;
+    }
+
+    .visit-fact:nth-child(3) {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .visit-inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .visit-title,
+    .visit-street,
+    .visit-facts,
+    .visit-order {
+      grid-column: 1;
+    }
+
+    .visit-title {
+      font-size: 25vw;
+    }
+
+    .visit-now {
+      grid-column: 1;
+      grid-row: auto;
+      margin-top: 1.5rem;
+      padding-bottom: 0;
+    }
+
+    .visit-facts {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0;
+      border-top: 0;
+    }
+
+    .visit-fact,
+    .visit-fact + .visit-fact {
+      grid-template-columns: 6rem minmax(0, 1fr);
+      padding: 1.25rem 0;
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .visit-fact:first-child {
+      border-top: 1px solid var(--ink);
+    }
+  }
+</style>

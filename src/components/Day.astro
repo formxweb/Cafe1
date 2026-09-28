@@ -1,0 +1,442 @@
+---
+import ProductImage from './ProductImage.astro';
+import { site } from '../data/site.js';
+import { product } from '../lib/menu.js';
+
+// A day at La Joie. The opening hours and the pre-order window are the
+// café's own; 15:00 is simply a time of day, not a service.
+const moments = [
+  {
+    time: site.hours.open,
+    label: 'Açılış',
+    title: 'Günaydın',
+    text: 'Kapılar her sabah dokuzda açılıyor. Güne bir cappuccinoyla ya da domates ve salatalıkla gelen sıcak bir omletle başlayın.',
+    items: [product(41), product(1)],
+    theme: 'morning',
+  },
+  {
+    time: site.preorder.from,
+    label: 'Ön sipariş',
+    title: 'Öğle arası kısa',
+    text: 'Menüden seçin, siparişinizi önden bırakın; geldiğinizde hazır olsun. Ödeme kasada.',
+    items: [product(33), product(106)],
+    note: `Ön sipariş ${site.preorder.from} – ${site.preorder.until} arası`,
+    cta: { href: site.preorder.url, label: 'Önden sipariş ver' },
+    theme: 'noon',
+  },
+  {
+    time: '15:00',
+    label: 'Öğleden sonra',
+    title: 'Buzlu bir şey',
+    text: 'Limonata, meyve püresi ve buz: Joie Fresh. Ya da karamel, çikolata veya beyaz çikolatayla Latte Creations; sıcak da olur, buzlu da.',
+    items: [product(96), product(99)],
+    theme: 'afternoon',
+  },
+  {
+    time: site.preorder.until,
+    label: 'Akşam',
+    title: 'Tatlı vakti',
+    text: 'Pastacı kreması ve taze çilekli meyveli kruvasan; oreolu, çilekli ya da muzlu magnolia. Yanına bir çay.',
+    items: [product(88), product(83)],
+    note: `Ön siparişler ${site.preorder.until}’a kadar`,
+    theme: 'evening',
+  },
+  {
+    time: site.hours.close,
+    label: 'Kapanış',
+    title: 'Afiyet olsun',
+    text: 'Kapılar 22:00’de kapanıyor. Yarın sabah dokuzda yine buradayız.',
+    items: [],
+    theme: 'night',
+  },
+];
+
+const toHour = (hhmm: string) => {
+  const [h, m] = hhmm.split(':').map(Number);
+  return h + m / 60;
+};
+---
+
+<section id="gun" class="day" data-nav-theme="light" data-day data-moment="morning" aria-labelledby="day-title">
+  <div class="day-inner wrap">
+    <div class="day-clock">
+      <div class="day-clock-inner">
+        <p class="day-index micro">04 — Gün</p>
+        <h2 id="day-title" class="day-title serif">La Joie’de bir gün</h2>
+        <div class="day-dial" aria-hidden="true">
+          <svg class="day-arc" viewBox="0 0 400 210" focusable="false">
+            <path class="day-arc-path" d="M 16 196 Q 200 -52 384 196" fill="none" data-day-path></path>
+            <circle class="day-sun" r="11" cx="16" cy="196" data-day-sun></circle>
+          </svg>
+          <p class="day-time serif num" data-day-time>{moments[0].time}</p>
+          <p class="day-ends micro num"><span>{site.hours.open}</span><span>{site.hours.close}</span></p>
+        </div>
+      </div>
+    </div>
+
+    <ol class="day-moments">
+      {
+        moments.map((m) => (
+          <li class="day-moment" data-moment-item data-hour={toHour(m.time)} data-time={m.time} data-theme={m.theme}>
+            <p class="day-when micro num">
+              <span>{m.time}</span>
+              <span class="day-rule" />
+              <span>{m.label}</span>
+            </p>
+            <h3 class="day-heading serif" data-reveal>
+              {m.title}
+              <span class="dot" aria-hidden="true" />
+            </h3>
+            <p class="day-text" data-reveal style="--delay:120">
+              {m.text}
+            </p>
+            {m.items.length > 0 && (
+              <ul class="day-items" data-reveal style="--delay:220">
+                {m.items.map((item) => (
+                  <li>
+                    <ProductImage id={item.id} alt={item.name} sizes="(max-width: 767px) 44vw, 20vw" />
+                    <p class="credit">
+                      <span>{item.name}</span>
+                      <span class="num" data-price-for={item.id}>
+                        {item.price}
+                      </span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {(m.note || m.cta) && (
+              <div class="day-action">
+                {m.cta && (
+                  <a class="button" href={m.cta.href} target="_blank" rel="noopener">
+                    {m.cta.label} <span class="arrow" aria-hidden="true">↗</span>
+                  </a>
+                )}
+                {m.note && <p class="micro">{m.note}</p>}
+              </div>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .day {
+    --day-bg: var(--paper);
+    --day-fg: var(--ink);
+    --day-muted: var(--muted);
+    --day-line: var(--line);
+    --day-accent: var(--gold-text);
+    position: relative;
+    background: var(--day-bg);
+    color: var(--day-fg);
+    transition:
+      background-color var(--d-4) var(--ease-in-out),
+      color var(--d-4) var(--ease-in-out);
+  }
+
+  .day[data-moment='noon'] {
+    --day-bg: #f5e9cf;
+  }
+
+  .day[data-moment='afternoon'] {
+    --day-bg: #ebd6ae;
+    --day-muted: #4d5a50;
+  }
+
+  .day[data-moment='evening'],
+  .day[data-moment='night'] {
+    --day-bg: var(--grove);
+    --day-fg: var(--paper);
+    --day-muted: var(--muted-on-dark);
+    --day-line: var(--line-on-dark);
+    --day-accent: var(--gold);
+  }
+
+  .day[data-moment='night'] {
+    --day-bg: var(--night);
+  }
+
+  .day-inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  /* ---- The dial: sticky on the left ---- */
+  .day-clock {
+    grid-column: 1 / span 5;
+  }
+
+  .day-clock-inner {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding-top: var(--nav-h);
+  }
+
+  .day-index {
+    color: var(--day-accent);
+    transition: color var(--d-4) var(--ease-in-out);
+  }
+
+  .day-title {
+    margin-top: 1rem;
+    font-size: var(--t-h3);
+    font-style: italic;
+    font-weight: 340;
+  }
+
+  .day-dial {
+    position: relative;
+    margin-top: clamp(2rem, 6vh, 4rem);
+  }
+
+  .day-arc {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .day-arc-path {
+    stroke: var(--day-line);
+    stroke-width: 1.5;
+    transition: stroke var(--d-4) var(--ease-in-out);
+  }
+
+  .day-sun {
+    fill: var(--gold);
+  }
+
+  .day-time {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4%;
+    text-align: center;
+    font-size: clamp(3.5rem, 8.2vw, 9.5rem);
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .day-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    color: var(--day-muted);
+  }
+
+  /* ---- Moments ---- */
+  .day-moments {
+    grid-column: 7 / -1;
+  }
+
+  .day-moment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+    padding-block: var(--s-9);
+  }
+
+  .day-when {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--day-accent);
+  }
+
+  .day-rule {
+    width: 2.5rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .day-heading {
+    margin-top: 1.25rem;
+    font-size: var(--t-h1);
+    font-weight: 340;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+
+  .day-text {
+    margin-top: 1.5rem;
+    max-width: 30rem;
+    font-size: var(--t-lead);
+    font-family: var(--serif);
+    font-weight: 330;
+    line-height: 1.3;
+    color: var(--day-fg);
+  }
+
+  .day-items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--col-gap);
+    margin-top: clamp(2rem, 4vw, 3rem);
+    max-width: 34rem;
+  }
+
+  .day-items li {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .day-items :global(picture) {
+    aspect-ratio: 5 / 4;
+  }
+
+  .day-items :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: 50% 100%;
+    filter: drop-shadow(0 1.25rem 1.25rem rgb(18 37 27 / 0.2));
+  }
+
+  .day-items .credit {
+    justify-content: space-between;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--day-line);
+  }
+
+  .day-action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .day-action .micro {
+    color: var(--day-muted);
+  }
+
+  .day[data-moment='evening'] .button,
+  .day[data-moment='night'] .button {
+    --button-bg: var(--paper);
+    --button-fg: var(--grove);
+  }
+
+  /* ---- Phone: the dial becomes a slim sticky strip ---- */
+  @media (max-width: 899px) {
+    .day-inner {
+      display: block;
+    }
+
+    .day-clock {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 4;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      background: var(--day-bg);
+      box-shadow: 0 1px 0 var(--day-line);
+      transition: background-color var(--d-4) var(--ease-in-out);
+    }
+
+    .day-clock-inner {
+      position: static;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      min-height: 0;
+      padding-block: 0.9rem;
+    }
+
+    .day-title {
+      display: none;
+    }
+
+    .day-dial {
+      display: grid;
+      grid-template-columns: 5.5rem auto;
+      align-items: end;
+      column-gap: 0.9rem;
+      margin: 0;
+    }
+
+    .day-time {
+      position: static;
+      font-size: 2.25rem;
+      text-align: left;
+    }
+
+    .day-ends {
+      display: none;
+    }
+
+    .day-moment {
+      min-height: 88svh;
+      padding-block: var(--s-8);
+    }
+
+    .day-heading {
+      font-size: clamp(2.75rem, 12vw, 4.5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .day,
+    .day-clock,
+    .day-arc-path,
+    .day-index {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { onFrame } from '../scripts/frame.js';
+
+  const day = document.querySelector<HTMLElement>('[data-day]')!;
+  const moments = [...day.querySelectorAll<HTMLElement>('[data-moment-item]')];
+  const path = day.querySelector<SVGPathElement>('[data-day-path]')!;
+  const sun = day.querySelector<SVGCircleElement>('[data-day-sun]')!;
+  const time = day.querySelector<HTMLElement>('[data-day-time]')!;
+  const length = path.getTotalLength();
+  const first = Number(moments[0].dataset.hour);
+  const last = Number(moments.at(-1)!.dataset.hour);
+  const dark = new Set(['evening', 'night']);
+
+  let active: HTMLElement | null = null;
+
+  onFrame(() => {
+    const middle = innerHeight / 2;
+    const centres = moments.map((m) => {
+      const r = m.getBoundingClientRect();
+      return r.top + r.height / 2;
+    });
+
+    // The sun moves continuously between the hours of the moments around it
+    let hour = first;
+    for (let i = 0; i < moments.length; i++) {
+      if (centres[i] > middle) break;
+      const next = moments[i + 1];
+      const h = Number(moments[i].dataset.hour);
+      if (!next) {
+        hour = h;
+        break;
+      }
+      const t = Math.min(1, (middle - centres[i]) / (centres[i + 1] - centres[i]));
+      hour = h + t * (Number(next.dataset.hour) - h);
+    }
+    const point = path.getPointAtLength(((hour - first) / (last - first)) * length);
+    sun.setAttribute('cx', point.x.toFixed(1));
+    sun.setAttribute('cy', point.y.toFixed(1));
+
+    const current = moments.findLast((m) => m.getBoundingClientRect().top < middle) ?? moments[0];
+    if (current !== active) {
+      active = current;
+      day.dataset.moment = current.dataset.theme;
+      day.dataset.navTheme = dark.has(current.dataset.theme!) ? 'dark' : 'light';
+      time.textContent = current.dataset.time!;
+    }
+  });
+</script>

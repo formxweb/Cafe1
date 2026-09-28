@@ -1,0 +1,715 @@
+---
+import ProductImage from './ProductImage.astro';
+import { site } from '../data/site.js';
+import { categories, productCount, syncedAt } from '../lib/menu.js';
+
+const updated = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }).format(syncedAt);
+const sectionCount = categories.filter((c) => !c.isFavourites).length;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section id="menu" class="menu" data-nav-theme="light" aria-labelledby="menu-title" data-menu>
+  <header class="menu-head wrap">
+    <p class="menu-index micro">03 — Menü</p>
+    <h2 id="menu-title" class="menu-title serif" data-reveal="rise"><span>Menü<span class="dot" aria-hidden="true"></span></span></h2>
+    <p class="menu-intro" data-reveal style="--delay:200">
+      Kahveden makarnaya, kahvaltıdan tatlıya. <span class="num">{productCount}</span> lezzet, <span class="num">{sectionCount}</span> bölüm.
+      Fiyatlar Türk lirasıdır.
+    </p>
+  </header>
+
+  <div class="menu-body wrap">
+    <div class="menu-index-col">
+      <div class="menu-tabs" role="tablist" aria-label="Menü bölümleri" data-tabs>
+        {
+          categories.map((c, i) => (
+            <button
+              class="menu-tab"
+              type="button"
+              role="tab"
+              id={`tab-${c.slug}`}
+              aria-controls={`bolum-${c.slug}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-tab
+            >
+              <span class="serif">{c.name}</span>
+              <span class="menu-tab-count micro num">{c.items.length}</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="menu-panels">
+      {
+        categories.map((c, i) => (
+          <section
+            class="menu-panel"
+            role="tabpanel"
+            id={`bolum-${c.slug}`}
+            aria-labelledby={`tab-${c.slug}`}
+            tabindex="-1"
+            data-panel
+          >
+            <header class="menu-panel-head">
+              <p class="micro num">
+                {pad(i + 1)} / {pad(categories.length)}
+              </p>
+              <h3 class="serif">{c.name}</h3>
+              {c.isFavourites && <p class="menu-panel-note">La Joie’de en çok tercih edilenler.</p>}
+            </header>
+            <ul class="menu-list">
+              {c.items.map((item, j) => (
+                <li class:list={['menu-item', { 'is-sold-out': item.soldOut }]} data-item style={`--j:${j}`}>
+                  <div class="menu-thumb">
+                    {item.image && (
+                      <ProductImage
+                        id={item.id}
+                        alt={item.name}
+                        photo
+                        sizes="(max-width: 1099px) 88px, 30vw"
+                        class="menu-thumb-img"
+                      />
+                    )}
+                  </div>
+                  <div class="menu-text">
+                    <h4 class="menu-name serif">
+                      {item.name}
+                      {item.favourite && !c.isFavourites && (
+                        <span class="menu-fav micro">
+                          <span class="dot" aria-hidden="true" />
+                          Favori
+                        </span>
+                      )}
+                    </h4>
+                    {item.description && <p class="menu-desc">{item.description}</p>}
+                    {item.options.map((choices) => (
+                      <p class="menu-options">
+                        {choices.map((choice) => (
+                          <span class:list={{ 'is-sold-out': choice.soldOut }}>
+                            {choice.name}
+                            {choice.price && <span class="num"> {choice.price}</span>}
+                          </span>
+                        ))}
+                      </p>
+                    ))}
+                  </div>
+                  <p class="menu-price num">
+                    <span class="menu-out">Tükendi</span>
+                    <span data-price-for={item.id}>{item.price}</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+
+    <aside class="menu-stage" aria-hidden="true" data-stage>
+      <div class="menu-stage-frame" data-stage-frame></div>
+      <p class="menu-stage-caption">
+        <span class="serif italic" data-stage-name></span>
+        <span class="num" data-stage-price></span>
+      </p>
+    </aside>
+  </div>
+
+  <footer class="menu-foot wrap">
+    <p class="micro" data-menu-freshness>Son güncelleme <time datetime={syncedAt.toISOString()}>{updated}</time></p>
+    <p>İçerik ve alerjen bilgisi için lütfen bize sorun.</p>
+    <a class="button button--line" href={site.preorder.url} target="_blank" rel="noopener">
+      Önden sipariş ver <span class="arrow" aria-hidden="true">↗</span>
+    </a>
+  </footer>
+</section>
+
+<style>
+  .menu {
+    position: relative;
+    background: var(--paper);
+    padding-block: var(--section) calc(var(--section) * 0.75);
+  }
+
+  /* ---- Head ---- */
+  .menu-head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    align-items: end;
+  }
+
+  .menu-index {
+    grid-column: 1 / -1;
+    color: var(--gold-text);
+  }
+
+  .menu-title {
+    grid-column: 1 / span 8;
+    font-size: clamp(6rem, 24vw, 26rem);
+    font-weight: 300;
+    line-height: 0.8;
+    letter-spacing: -0.055em;
+    color: var(--grove);
+    margin-left: -0.05em;
+  }
+
+  .menu-intro {
+    grid-column: 9 / -1;
+    max-width: 24rem;
+    padding-bottom: 1.5rem;
+    font-size: var(--t-lead);
+    font-family: var(--serif);
+    font-weight: 340;
+    line-height: 1.25;
+  }
+
+  /* ---- Body: index | items | stage ---- */
+  .menu-body {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    margin-top: clamp(3rem, 7vw, 7rem);
+    border-top: 1px solid var(--ink);
+  }
+
+  .menu-index-col {
+    grid-column: 1 / span 3;
+  }
+
+  .menu-tabs {
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+    display: grid;
+    padding-top: 1.5rem;
+  }
+
+  .menu-tab {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.4rem 0 0.4rem 1.25rem;
+    text-align: left;
+    color: var(--muted);
+    transition: color var(--d-1) var(--ease);
+  }
+
+  .menu-tab .serif {
+    font-size: clamp(1.125rem, 1.35vw, 1.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .menu-tab-count {
+    letter-spacing: 0.05em;
+    color: var(--gold-text);
+  }
+
+  .menu-tab::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    margin-top: -3.5px;
+    border-radius: 50%;
+    background: var(--gold);
+    transform: scale(0);
+    transition: transform var(--d-2) var(--ease);
+  }
+
+  .menu-tab[aria-selected='true'] {
+    color: var(--ink);
+  }
+
+  .menu-tab[aria-selected='true']::before {
+    transform: scale(1);
+  }
+
+  @media (hover: hover) {
+    .menu-tab:hover {
+      color: var(--ink);
+    }
+  }
+
+  :global(html:not(.js)) .menu-index-col,
+  :global(html:not(.js)) .menu-stage {
+    display: none;
+  }
+
+  .menu-panels {
+    grid-column: 4 / span 5;
+  }
+
+  :global(html:not(.js)) .menu-panels {
+    grid-column: 1 / -1;
+  }
+
+  .menu-panel + .menu-panel {
+    margin-top: var(--s-9);
+  }
+
+  :global(.js) .menu-panel + .menu-panel {
+    margin-top: 0;
+  }
+
+  .menu-panel:focus {
+    outline: none;
+  }
+
+  .menu-panel-head {
+    padding: 1.5rem 0 clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .menu-panel-head .micro {
+    color: var(--gold-text);
+  }
+
+  .menu-panel-head h3 {
+    margin-top: 0.75rem;
+    font-size: var(--t-h2);
+    font-weight: 340;
+    color: var(--grove);
+  }
+
+  .menu-panel-note {
+    margin-top: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* ---- Item ---- */
+  .menu-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 1.5rem;
+    padding-block: 1.35rem;
+    border-top: 1px solid var(--line);
+    transition: opacity var(--d-1) var(--ease);
+  }
+
+  .menu-thumb {
+    display: none;
+  }
+
+  .menu-name {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    font-size: clamp(1.375rem, 1.7vw, 1.875rem);
+    font-weight: 380;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+
+  .menu-fav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.6875rem;
+    color: var(--gold-text);
+  }
+
+  .menu-fav .dot {
+    width: 6px;
+    height: 6px;
+    margin: 0;
+  }
+
+  .menu-desc {
+    margin-top: 0.5rem;
+    max-width: 38rem;
+    color: var(--muted);
+    font-size: var(--t-small);
+    line-height: 1.55;
+  }
+
+  .menu-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0;
+    margin-top: 0.6rem;
+    font-size: 0.8125rem;
+    color: var(--ink);
+  }
+
+  .menu-options > span + span::before {
+    content: '·';
+    margin-inline: 0.55rem;
+    color: var(--gold-text);
+  }
+
+  .menu-options .num {
+    color: var(--gold-text);
+  }
+
+  .menu-options .is-sold-out {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .menu-price {
+    display: grid;
+    justify-items: end;
+    align-content: start;
+    gap: 0.25rem;
+    padding-top: 0.2rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .menu-out {
+    display: none;
+    font-size: var(--t-micro);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8c2c22;
+  }
+
+  .menu-item.is-sold-out .menu-out {
+    display: block;
+  }
+
+  .menu-item.is-sold-out .menu-name,
+  .menu-item.is-sold-out [data-price-for] {
+    opacity: 0.5;
+  }
+
+  /* Visual focus: the item under the pointer stays, the rest step back */
+  @media (hover: hover) and (min-width: 1100px) {
+    .menu-list:hover .menu-item:not(:hover) {
+      opacity: 0.45;
+    }
+  }
+
+  /* ---- Stage: the hovered product, large, in its studio photograph ---- */
+  .menu-stage {
+    grid-column: 9 / -1;
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+    align-self: start;
+    display: grid;
+    margin-top: 1.5rem;
+  }
+
+  .menu-stage-frame {
+    position: relative;
+    aspect-ratio: 1;
+  }
+
+  .menu-stage-frame :global(picture) {
+    position: absolute;
+    inset: 0;
+    transition:
+      opacity var(--d-2) var(--ease),
+      transform var(--d-3) var(--ease);
+  }
+
+  .menu-stage-frame :global(picture.is-leaving) {
+    opacity: 0;
+    transform: translateY(-3%) scale(0.98);
+  }
+
+  .menu-stage-frame :global(picture.is-entering) {
+    opacity: 0;
+    transform: translateY(4%) scale(1.02);
+  }
+
+  /* The studio photos share the page's cream paper; feathered edges let the
+     La Joie watermark fade out instead of stopping at a hard line. */
+  .menu-stage-frame :global(img),
+  .menu-thumb :global(.menu-thumb-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    --feather: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+      linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: var(--feather);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--feather);
+    mask-composite: intersect;
+  }
+
+  .menu-stage-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .menu-stage-caption .serif {
+    font-size: 1.375rem;
+    line-height: 1.2;
+  }
+
+  /* ---- Foot ---- */
+  .menu-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2.5rem;
+    margin-top: clamp(3rem, 6vw, 6rem);
+    color: var(--muted);
+    font-size: var(--t-small);
+  }
+
+  .menu-foot .button {
+    margin-left: auto;
+    color: var(--grove);
+  }
+
+  /* ---- Below 1100px: category strip and thumbnails ---- */
+  @media (max-width: 1099px) {
+    .menu-head {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 1.5rem;
+    }
+
+    .menu-title,
+    .menu-intro {
+      grid-column: 1;
+    }
+
+    .menu-intro {
+      padding-bottom: 0;
+    }
+
+    .menu-body {
+      display: block;
+      padding-inline: 0;
+      border-top: 0;
+    }
+
+    .menu-stage {
+      display: none;
+    }
+
+    .menu-index-col {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 5;
+      background: var(--paper);
+      box-shadow: 0 1px 0 var(--line);
+    }
+
+    .menu-tabs {
+      position: static;
+      display: flex;
+      gap: 0.25rem;
+      overflow-x: auto;
+      padding: 0 var(--gutter);
+      scroll-padding-inline: var(--gutter);
+      scrollbar-width: none;
+      mask-image: linear-gradient(to right, transparent, #000 var(--gutter), #000 calc(100% - 3rem), transparent);
+    }
+
+    .menu-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .menu-tab {
+      flex: none;
+      padding: 1rem 0.75rem 1rem 1.25rem;
+    }
+
+    .menu-tab::before {
+      left: 0.3rem;
+    }
+
+    .menu-tab .serif {
+      font-size: 1.125rem;
+      white-space: nowrap;
+    }
+
+    .menu-panels {
+      padding-inline: var(--gutter);
+    }
+
+    .menu-item {
+      grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+      column-gap: 1rem;
+    }
+
+    .menu-thumb {
+      display: block;
+      position: relative;
+      align-self: start;
+      width: 5.5rem;
+      aspect-ratio: 1;
+    }
+
+
+    .menu-foot .button {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .menu-item {
+      grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+      column-gap: 0.85rem;
+    }
+
+    .menu-thumb {
+      width: 4.5rem;
+    }
+
+    .menu-name {
+      font-size: 1.3125rem;
+    }
+
+    .menu-price {
+      font-size: 1rem;
+    }
+  }
+
+  /* ---- Category change ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-panel.is-entering .menu-panel-head h3 {
+      animation: menu-rise var(--d-3) var(--ease) both;
+    }
+
+    .menu-panel.is-entering .menu-item {
+      animation: menu-fade var(--d-3) var(--ease) both;
+      animation-delay: calc(80ms + var(--j) * 45ms);
+    }
+  }
+
+  @keyframes menu-rise {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(30%);
+    }
+    to {
+      clip-path: inset(0 0 -20% 0);
+      transform: none;
+    }
+  }
+
+  @keyframes menu-fade {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-menu]')!;
+  const strip = root.querySelector<HTMLElement>('[data-tabs]')!;
+  const tabs = [...strip.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+  const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+  const frame = root.querySelector<HTMLElement>('[data-stage-frame]')!;
+  const stageName = root.querySelector<HTMLElement>('[data-stage-name]')!;
+  const stagePrice = root.querySelector<HTMLElement>('[data-stage-price]')!;
+  const wide = matchMedia('(min-width: 1100px)');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  let shown: HTMLElement | null = null;
+
+  // Stage: copy the item's own picture (already has every size) into the frame
+  function stage(item: HTMLElement) {
+    if (!wide.matches || item === shown) return;
+    const source = item.querySelector('picture');
+    if (!source) return;
+    shown = item;
+
+    const picture = source.cloneNode(true) as HTMLPictureElement;
+    picture.querySelectorAll('source, img').forEach((el) => el.setAttribute('sizes', '30vw'));
+    const img = picture.querySelector('img')!;
+    img.loading = 'eager';
+    img.alt = '';
+    picture.classList.add('is-entering');
+
+    frame.querySelectorAll('picture').forEach((old) => {
+      old.classList.add('is-leaving');
+      setTimeout(() => old.remove(), reduce.matches ? 0 : 700);
+    });
+    frame.append(picture);
+    const reveal = () => requestAnimationFrame(() => picture.classList.remove('is-entering'));
+    img.complete ? reveal() : img.addEventListener('load', reveal, { once: true });
+
+    stageName.textContent = item.querySelector('.menu-name')!.firstChild!.textContent!.trim();
+    stagePrice.textContent = item.querySelector('[data-price-for]')!.textContent;
+  }
+
+  function select(tab: HTMLButtonElement, focus = false) {
+    const panel = document.getElementById(tab.getAttribute('aria-controls')!)!;
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach((p) => {
+      p.hidden = p !== panel;
+      p.classList.toggle('is-entering', p === panel);
+    });
+    if (focus) tab.focus({ preventScroll: true });
+    if (!wide.matches) {
+      strip.scrollTo({ left: tab.offsetLeft - strip.offsetLeft - 16, behavior: reduce.matches ? 'auto' : 'smooth' });
+    }
+
+    const first = panel.querySelector<HTMLElement>('[data-item]');
+    if (first) stage(first);
+
+    // Keep the start of the new list in view when switching from deep inside a long one
+    const top = root.querySelector('.menu-body')!.getBoundingClientRect().top;
+    if (top < 0) {
+      const offset = wide.matches ? 0 : (root.querySelector('.menu-index-col') as HTMLElement).offsetHeight;
+      scrollBy({ top: top - offset, behavior: reduce.matches ? 'auto' : 'smooth' });
+    }
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (event) => {
+      const next = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[
+        event.key
+      ];
+      if (next === undefined) return;
+      event.preventDefault();
+      select(tabs[(next + tabs.length) % tabs.length], true);
+    });
+  });
+
+  root.querySelectorAll<HTMLElement>('[data-item]').forEach((item) => {
+    item.addEventListener('pointerenter', () => stage(item));
+  });
+
+  const stageCurrent = () => {
+    const current = panels.find((p) => !p.hidden)?.querySelector<HTMLElement>('[data-item]');
+    if (current) stage(current);
+  };
+  const setOrientation = () => strip.setAttribute('aria-orientation', wide.matches ? 'vertical' : 'horizontal');
+  wide.addEventListener('change', () => {
+    setOrientation();
+    shown = null;
+    stageCurrent();
+  });
+
+  setOrientation();
+  panels.forEach((p, i) => (p.hidden = i !== 0));
+
+  // Fill the stage only when the menu comes near, so its image never competes
+  // with the cover for bandwidth.
+  new IntersectionObserver(
+    ([entry], observer) => {
+      if (!entry.isIntersecting) return;
+      stageCurrent();
+      observer.disconnect();
+    },
+    { rootMargin: '50% 0px' },
+  ).observe(root);
+</script>

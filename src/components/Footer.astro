@@ -1,0 +1,155 @@
+---
+import Wordmark from './brand/Wordmark.astro';
+import { site, sections as links } from '../data/site.js';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" data-nav-theme="dark">
+  <div class="footer-top wrap">
+    <p class="footer-sign serif italic">Afiyet olsun<span class="dot" aria-hidden="true"></span></p>
+
+    <nav class="footer-col" aria-label="Bölümler">
+      <p class="micro">Bölümler</p>
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a class="link" href={link.href}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer-col">
+      <p class="micro">İletişim</p>
+      <ul>
+        <li><a class="link num" href={site.phone.href}>{site.phone.display}</a></li>
+        <li><a class="link" href={site.instagram.url} target="_blank" rel="noopener">@{site.instagram.handle}</a></li>
+        <li>{site.address.street}, {site.address.city}</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <p class="micro">Saatler</p>
+      <ul>
+        <li class="num">{site.hours.label}</li>
+        <li class="num">Ön sipariş {site.preorder.from} – {site.preorder.until}</li>
+        <li><span class="footer-status" data-open-status></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-mark wrap">
+    <Wordmark descriptor label="La Joie Kitchen & Coffee" />
+  </div>
+
+  <div class="footer-base wrap micro">
+    <p>© {year} {site.fullName} · {site.address.city}</p>
+    <a class="link" href="#kapak">Başa dön ↑</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--grove);
+    color: var(--paper);
+    padding-top: clamp(4rem, 8vw, 8rem);
+    overflow: hidden;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    row-gap: 3rem;
+  }
+
+  .footer-sign {
+    grid-column: 1 / span 5;
+    font-size: var(--t-h2);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .footer-col {
+    grid-column: span 2;
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    font-size: var(--t-small);
+  }
+
+  .footer-col:nth-of-type(2) {
+    grid-column: 7 / span 2;
+  }
+
+  .footer-col:last-child {
+    grid-column: span 3;
+  }
+
+  .footer-col .micro {
+    color: var(--gold);
+  }
+
+  .footer-col ul {
+    display: grid;
+    gap: 0.5rem;
+    color: var(--muted-on-dark);
+  }
+
+  .footer-col a {
+    color: var(--paper);
+  }
+
+  .footer-status:empty {
+    display: none;
+  }
+
+  .footer-mark {
+    margin-top: clamp(4rem, 10vw, 10rem);
+    color: var(--paper);
+  }
+
+  .footer-base {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 2rem;
+    margin-top: clamp(1.5rem, 3vw, 3rem);
+    border-top: 1px solid var(--line-on-dark);
+    color: var(--muted-on-dark);
+  }
+
+  @media (max-width: 1023px) {
+    .footer-sign {
+      grid-column: 1 / -1;
+    }
+
+    .footer-col,
+    .footer-col:nth-of-type(2),
+    .footer-col:last-child {
+      grid-column: span 4;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .footer-col,
+    .footer-col:nth-of-type(2),
+    .footer-col:last-child {
+      grid-column: span 2;
+    }
+
+    .footer-col:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .footer-base {
+      flex-direction: column;
+    }
+  }
+</style>

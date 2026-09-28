@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Emblem from '../components/brand/Emblem.astro';
+import { site } from '../data/site.js';
+---
+
+<Base title={`Sayfa bulunamadı · ${site.fullName}`} description="Aradığınız sayfa bulunamadı." noindex>
+  <main id="icerik" class="lost wrap">
+    <Emblem class="lost-emblem" />
+    <p class="micro">404</p>
+    <h1 class="serif">Bu masa boş<span class="dot" aria-hidden="true"></span></h1>
+    <p>Aradığınız sayfa burada değil. Menü, saatler ve adres ana sayfada.</p>
+    <a class="button" href="/">Ana sayfaya dön <span class="arrow" aria-hidden="true">→</span></a>
+  </main>
+</Base>
+
+<style>
+  .lost {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 1.5rem;
+    min-height: 100svh;
+    text-align: center;
+  }
+
+  .lost :global(.lost-emblem) {
+    width: 6rem;
+  }
+
+  .lost .micro {
+    color: var(--gold-text);
+  }
+
+  .lost h1 {
+    font-size: var(--t-h1);
+    color: var(--grove);
+  }
+
+  .lost p:not(.micro) {
+    max-width: 26rem;
+    color: var(--muted);
+  }
+</style>

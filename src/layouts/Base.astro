@@ -1,0 +1,112 @@
+---
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '@fontsource-variable/jost/wght.css';
+import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
+import jostLatin from '@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url';
+import '../styles/global.css';
+import { site } from '../data/site.js';
+import { categories } from '../lib/menu.js';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.jpg', Astro.site).href;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CafeOrCoffeeShop',
+  '@id': `${site.url}/#cafe`,
+  name: site.fullName,
+  alternateName: ['La Joie', 'La Joie Coffee'],
+  url: site.url,
+  image: ogImage,
+  logo: new URL('/favicon.svg', Astro.site).href,
+  telephone: site.phone.e164,
+  priceRange: '₺₺',
+  currenciesAccepted: 'TRY',
+  servesCuisine: ['Kahve', 'Tatlı', 'Kahvaltı', 'Makarna'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressCountry: site.address.country,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: site.hours.open,
+      closes: site.hours.close,
+    },
+  ],
+  sameAs: [site.instagram.url],
+  hasMenu: {
+    '@type': 'Menu',
+    name: 'La Joie Menü',
+    url: `${site.url}/#menu`,
+    inLanguage: 'tr',
+    hasMenuSection: categories
+      .filter((c) => !c.isFavourites)
+      .map((c) => ({
+        '@type': 'MenuSection',
+        name: c.name,
+        hasMenuItem: c.items.map((item) => ({
+          '@type': 'MenuItem',
+          name: item.name,
+          description: item.description || undefined,
+          offers: {
+            '@type': 'Offer',
+            price: item.min.toFixed(2),
+            priceCurrency: 'TRY',
+          },
+        })),
+      })),
+  },
+};
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta name="theme-color" content="#173f32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:site_name" content={site.fullName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="La Joie Kitchen & Coffee logosu ve La Joie fincanında flat white" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jostLatin} as="font" type="font/woff2" crossorigin />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#icerik">İçeriğe geç</a>
+    <slot />
+  </body>
+</html>
